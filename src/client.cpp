@@ -68,6 +68,7 @@ void CLIENT::connectServer(){
 void CLIENT::runClient(){
     while(true){
         // get request
+        std::cout<<">>> ";
         string req;
         getline(cin,req);
 

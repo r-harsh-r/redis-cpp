@@ -1,4 +1,13 @@
+implement ds again
+setup expiration time
+
+
 1) implement the ds used by redis to store the kv pair
 2) implement get set in server and client
 3) implement time limit expiration
 4) implement the writing on disk and fetching from disk when the SERVER is restarted
+
+future scope
+=> implement rdb
+=> implement event loop
+=> implement key eviction policy

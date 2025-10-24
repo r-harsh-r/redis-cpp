@@ -8,18 +8,22 @@
 #include <arpa/inet.h>
 #include<unistd.h>
 #include<thread>
+#include<vector>
+using namespace std;
 
-#include "./RESP.h"
+#include "../include/RESP.h"
+#include "../include/ds.h"
 
 class SERVER{
     std::string PORT;
     int sockfd;
     RESP resp;
+    DS ds;
 
 public:
     SERVER(std::string&);
     int startServer(int BACKLOG= 10);
     void runServer();
     void handleConnection(int);
-
+    string handleRequest(string&);
 };

@@ -22,7 +22,7 @@ std::string RESP::deSerialize(std::string&str){
     for(int i = 1;i<idx;i++){
         length += str[i];
     }
-    std::reverse(length.begin(),length.end());
+    // std::reverse(length.begin(),length.end());
     int len = stoi(length);
     
     idx = idx + 2;

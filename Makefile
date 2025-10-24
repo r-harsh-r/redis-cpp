@@ -12,10 +12,10 @@ INCLUDE_DIR = include
 TARGET = redis_server
 
 # Source files
-SOURCES = $(SRC_DIR)/main.cpp $(SRC_DIR)/RESP.cpp $(SRC_DIR)/client.cpp $(SRC_DIR)/server.cpp $(SRC_DIR)/ioFull.cpp
+SOURCES = $(SRC_DIR)/main.cpp $(SRC_DIR)/RESP.cpp $(SRC_DIR)/client.cpp $(SRC_DIR)/server.cpp $(SRC_DIR)/ioFull.cpp $(SRC_DIR)/ds.cpp
 
 # Object files
-OBJECTS = $(OBJ_DIR)/main.o $(OBJ_DIR)/RESP.o $(OBJ_DIR)/client.o $(OBJ_DIR)/server.o $(OBJ_DIR)/ioFull.o
+OBJECTS = $(OBJ_DIR)/main.o $(OBJ_DIR)/RESP.o $(OBJ_DIR)/client.o $(OBJ_DIR)/server.o $(OBJ_DIR)/ioFull.o $(OBJ_DIR)/ds.o
 
 # Default target
 all: $(TARGET)
@@ -43,6 +43,10 @@ $(OBJ_DIR)/server.o: $(SRC_DIR)/server.cpp $(INCLUDE_DIR)/server.h $(INCLUDE_DIR
 # Compile ioFull.cpp
 $(OBJ_DIR)/ioFull.o: $(SRC_DIR)/ioFull.cpp $(INCLUDE_DIR)/ioFull.h | $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) -c $(SRC_DIR)/ioFull.cpp -o $(OBJ_DIR)/ioFull.o
+
+# Compile ds.cpp
+$(OBJ_DIR)/ds.o: $(SRC_DIR)/ds.cpp $(INCLUDE_DIR)/ds.h | $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -c $(SRC_DIR)/ds.cpp -o $(OBJ_DIR)/ds.o
 
 # Create obj directory if it doesn't exist
 $(OBJ_DIR):

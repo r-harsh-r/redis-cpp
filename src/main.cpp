@@ -38,6 +38,14 @@ int main(int argc , char*argv[]){
             return 1;
         }
 
+            // Check if the OS is Windows
+        #ifdef _WIN32
+            std::system("cls");
+        #else
+            // Assume other systems (Linux, macOS)
+            std::system("clear");
+        #endif
+
         string URL = string(argv[2]);
         string PORT = string(argv[3]);
         

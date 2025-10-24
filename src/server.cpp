@@ -69,7 +69,71 @@ void SERVER::runServer(){
 
 }
 
+
+vector<string> parse(string&req){
+    vector<string>ans;
+
+    int n = req.size();
+
+    int tail = 0;
+    int head = tail - 1;
+    string temp = "";
+    while(tail < n){
+        while(head + 1 < n && req[tail] != ' ' && req[head + 1] != ' '){
+            head++;
+            temp += req[head];
+        }
+
+        if(tail <= head){
+            ans.push_back(temp);
+            tail = head + 1;
+        }else{
+            tail++;
+            head = tail - 1;
+        }
+        temp = "";
+    }
+
+    return ans;
+
+}
+
+string SERVER::handleRequest(string&req){
+    vector<string>fragmented = parse(req);
+
+
+    // processing the request - business logic
+    string res = "";
+    
+    if(fragmented[0] == "PING") res = "PONG";
+    
+    if(fragmented[0] == "ECHO") {
+        for(int i = 1;i < (int)fragmented.size();i++){
+            res += fragmented[i]+ " ";
+        }
+    }
+
+    if(fragmented[0] == "SET"){
+        if(fragmented.size() == 5){
+            if(fragmented[3] == "EX"){
+                ds.set(fragmented[1],fragmented[2],stoi(fragmented[4]));
+            }else return "ERROR";
+        }else{
+            ds.set(fragmented[1] , fragmented[2]);
+        }
+        return "OK";
+    }
+    
+    if(fragmented[0] == "GET"){
+        return ds.get(fragmented[1]);
+    }
+
+    return res;
+
+}
+
 void SERVER::handleConnection(int clientFD){
+    cout<<"Connection opened"<<endl;
     while(true){
         // read full request
         string req_serialized = readFull(clientFD);
@@ -85,7 +149,8 @@ void SERVER::handleConnection(int clientFD){
         // use data structure here to store fetch etc
 
         // write full response
-        string res = "OK";
+        string res = handleRequest(req);
+
         string res_serialized = resp.serialize(res);
         writeFull(clientFD, res_serialized);
     }
