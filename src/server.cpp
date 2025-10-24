@@ -73,6 +73,12 @@ void SERVER::handleConnection(int clientFD){
     while(true){
         // read full request
         string req_serialized = readFull(clientFD);
+
+        if(req_serialized == ""){
+            cout<<"Connection Closed\n";
+            break;
+        }
+
         string req = resp.deSerialize(req_serialized);
 
         // parse this request and get the res
