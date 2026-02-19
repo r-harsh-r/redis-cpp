@@ -21,3 +21,28 @@ Min Latency:      53.000 µs
 P50 Latency:      508.000 µs
 P99 Latency:      3995.000 µs
 Max Latency:      25205.000 µs
+
+=================================================
+Total Operations:   1000000
+Concurrent Clients: 50
+
+[1/2] Benchmarking SET operations... Done in 69561 ms
+[2/2] Benchmarking GET operations... Done in 13990 ms
+
+=== SET Operations ===
+Total Operations: 1000000
+Throughput:       14661.59 ops/sec
+Average Latency:  3410.272 µs
+Min Latency:      258.000 µs
+P50 Latency:      2953.000 µs
+P99 Latency:      14160.000 µs
+Max Latency:      542886.000 µs
+
+=== GET Operations ===
+Total Operations: 1000000
+Throughput:       74506.87 ops/sec
+Average Latency:  671.079 µs
+Min Latency:      49.000 µs
+P50 Latency:      606.000 µs
+P99 Latency:      2224.000 µs
+Max Latency:      43318.000 µs  
