@@ -1,5 +1,2 @@
 benchmark
-BENCHMARK_README.md
-benchmark-custom.py
-benchmark-p-latency.py
-benchmark.cpp
+hashtable/hashtable.cpp
