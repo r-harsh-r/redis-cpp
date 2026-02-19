@@ -1,39 +1,52 @@
+#include <iostream>
+#include <stdexcept>
 #include "../include/ioFull.h"
+
+using namespace std;
 
 string readFull(int sockFD){
     string str = "";
-
     char ch[1];
 
-    // listen till \r\n
+    // 1. Read the first line (Header)
     while(true){
         int byteRead = recv(sockFD,ch,1,0);
-
         if(byteRead <= 0){
-            return str;
-            break;
+            return ""; // Connection closed or empty read
         }
-
         str.push_back(ch[0]);
-        
-        if(str.size() >= 2 && str[str.size() - 1] == '\n' && str[str.size() - 2] == '\r') break;
+        if(str.size() >= 2 && str.back() == '\n' && str[str.size() - 2] == '\r') break;
     }
     
+    // Safety check: if header is too short or malformed
+    if(str.size() < 3) return ""; 
+
     // extract the byte size
     string len_str = "";
-    for(int i = 1;i<(int)str.size() - 2;i++){
+    // skipping the first char (type identifier like '$' or '*') and last 2 (\r\n)
+    for(int i = 1; i < (int)str.size() - 2; i++){
         len_str += str[i];
     }
-    int len = stoi(len_str);
-
-    // read for len+2
-    for(int i = 0;i<len + 2;i++){
-        int byteRead = recv(sockFD , ch , 1 , 0);
-        
-        if(byteRead <= 0){
-            break;
-        }
     
+    int len = 0;
+    try {
+        if(!len_str.empty()) {
+            len = stoi(len_str);
+        } else {
+            return ""; 
+        }
+    } catch (const std::exception& e) {
+        // Prevent crash on invalid format
+        cerr << "Error parsing RESP length: " << len_str << endl;
+        return ""; 
+    }
+
+    // read for len+2 (payload + \r\n)
+    for(int i = 0; i < len + 2; i++){
+        int byteRead = recv(sockFD , ch , 1 , 0);
+        if(byteRead <= 0){
+            return ""; // Connection dropped mid-packet
+        }
         str.push_back(ch[0]);
     }
 
