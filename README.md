@@ -1,4 +1,4 @@
-# Redis-CPP
+# In-Memory Key-Value Engine
 
 A lightweight, custom implementation of a Redis-like key-value store in C++. This project demonstrates a multi-threaded server architecture, custom hash table implementation with progressive rehashing, and a simplified RESP (Redis Serialization Protocol) for client-server communication.
 
@@ -8,23 +8,20 @@ A lightweight, custom implementation of a Redis-like key-value store in C++. Thi
 - **Custom Hash Table**: 
   - Implemented from scratch (no `std::unordered_map` for core storage).
   - **Progressive Rehashing**: Resizes the hash table incrementally to avoid latency spikes during growth.
-  - Template-based design for flexibility.
 - **Thread-Safe Architecture**: Uses `std::mutex` to protect shared data structures in a multi-threaded environment.
 - **Client-Server Model**:
   - **Server**: Handles multiple concurrent client connections using threads.
   - **Client**: Interactive CLI to communicate with the server.
 - **RESP Protocol**: Implements a simplified version of the Redis Serialization Protocol for command and data transmission.
-- **TTL Support**: `SET` commands support an optional expiration time (`EX` flag).
-- **Benchmark Tool**: Includes a dedicated benchmarking tool to measure throughput and latency.
+- **TTL Support**: `SET` commands support an optional expiration time (`EX` flag)
 
 ## Project Structure
 
 ```
 redis-cpp/
 ├── benchmark.cpp       # Performance benchmarking tool
-├── benchmark-custom.py # Python benchmark script
 ├── hashtable/
-│   └── hashtable.h     # Custom Hash Table implementation
+│   └── hashtable.h     # Custom Hash Table
 ├── include/            # Header files
 │   ├── client.h
 │   ├── ds.h            # Data Store wrapper
